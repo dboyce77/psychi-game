@@ -1,2 +1,2 @@
-# psychi-game
+# psychic-game
 psychic word game

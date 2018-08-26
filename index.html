@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Psychic Game</title>
+
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
+
+</head>
+
+
+<body onload="resetGame()">
+    <div class="container">
+        <h1>The Psychic Game</h1>
+        <h2></h2>
+
+        <br><br>
+        <p>Guess what letter I am thinking of...</p>
+        <p>Number of Wins: <span id="user-wins"></span></p>
+        <p>Number of Loses: <span id="user-loses"></span></p>
+        <p>Number of Guesses Left: <span id="user-tries"></span></p>
+        <p>Letters guessed so far: <span id="user-list"></span></p>
+        <p><strong><span id="message"></strong></span></p>
+
+
+        <script>
+            // variables for game        
+            var rand_letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'];
+            var actual_letter = "";
+            var wins = 0;
+            var loses = 0;
+            var tries = 0;
+            var guesses = [];
+
+            // called functions
+
+            function getRandomLetter() {
+                var num = getRandomInt(rand_letter.length);
+                actual_letter = rand_letter[num].toLowerCase();
+            }
+
+
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * Math.floor(max));
+            }
+
+            function updateTries(tries) {
+                console.log(tries);
+                document.getElementById("user-tries").innerHTML = tries;
+
+            }
+
+            function updateWins(wins) {
+                document.getElementById("user-wins").innerHTML = wins;
+            }
+
+            function updateLoses(loses) {
+                document.getElementById("user-loses").innerHTML = loses;
+            }
+
+            function updateGuesses(guesses) {
+                document.getElementById('user-list').innerHTML = guesses;
+            }
+
+            function resetGame() {
+                tries = 9;
+                guesses = [];
+                updateGuesses(guesses);
+                updateTries(tries);
+                getRandomLetter();
+               
+            }
+            // Next, we give JavaScript a function to execute when onkeyup event fires.
+            document.onkeyup = function (event) {
+                var letter = event.key.toLowerCase();
+                guesses.push(letter);
+                document.getElementById('user-list').innerHTML = guesses;
+            
+                // if a match
+
+                if (actual_letter == letter) {
+                    wins++;
+                    updateWins(wins);
+                    resetGame();
+                } else { // if not match
+                    tries--;
+                    updateTries(tries);
+                }
+
+                if (tries == 0) { loses++; updateLoses(loses); resetGame(); } // if tries = 0 update loses, resetGame
+
+
+            };
+
+
+        </script>
+
+    </div>
+
+</body>
+
+</html>
